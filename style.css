@@ -24,7 +24,8 @@
     color: FF57BB;
   }
 
-  h2 {
+  footer {
+    border: chocolate;
     background-color: #0e685f;
     z-index: 1;
   }
