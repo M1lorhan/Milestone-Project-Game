@@ -1,0 +1,30 @@
+#background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 50%;
+    z-index: -1;
+  }
+  h1 {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    font-size: 5em;
+    font-family: "Lugrasimo", cursive;
+    color: FF57BB;
+  }
+
+  div {
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    font-size: 3em;
+    font-family: "Lugrasimo", cursive;
+    color: FF57BB;
+  }
+
+  h2 {
+    background-color: #0e685f;
+    z-index: 1;
+  }
