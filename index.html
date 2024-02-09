@@ -15,21 +15,38 @@
         <source src="/assets/production_id_5147338 (1080p).mp4" type="video/mp4" title="beach at sunset"
         Alt = “Video by Christopher Schultz: https://www.pexels.com/video/beautiful-scenery-of-a-seashore-5147338/”>
               </video>
-        
+    <div class = "dealCards">
+    <button class ="dealCards">Deal</button>
+    </div> 
 </body>
 <footer id = "CardTable">
     <div>
     <div id = "CardTable">
     <div>
-        <h2>Player Cards</h2>
-        <div id = "Purse">Player Purse:</div>
+        <h2 id = "playerName">Player Cards</h2>
+        <div class = "playerCards"></div>
     </div>
     <div>
-    <div id = "Bet">Place your Bet!</div>
-    <div id = "Bet">Player Pot</div>
+    <div>
+    <div>Place your Bet!</div>
+    <div id = "Bet">
+        <button onclick="addToPot('pot + 5', 'purse - 5')">$5</button>
+        <button onclick="addToPot('pot + 10', 'purse - 10')">$10</button>
+        <button onclick="addToPot('pot + 20', 'purse - 20')">$20</button>
+    </div>
+    </div>
+    <div>
+    <div id="playerPot">Player Pot</div>
+    <div id = "pot"></div>
+    </div>
+    <div>
+    <div id = "playerPurse">Player Purse:</div>
+    <div id = "purse"></div>
+    </div>
     </div>
     <div>
     <h2>Dealer Cards</h2>
+    <div class = "dealerCards"></div>
     </div>
 </div>
 
