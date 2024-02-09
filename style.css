@@ -34,7 +34,7 @@ footer {
   width: 95%;
   border: 1em solid black;
   background-color: darkgreen;
-  border-radius: 10%;
+  border-radius: 20%;
   z-index: 2;
   height: 16em;
 }
@@ -67,24 +67,26 @@ div{
 #Purse {
   padding-left: 5em;
 }
-ul{
+
+ul {
   display: flex;
   list-style-type: none;
   margin: 0;
   padding: 0;
   justify-content: center;
   text-align: center;
-
+  
 }
 li {
   list-style-type: none;
   display: inline-block;
   justify-content: space-around;
-  background-color: white;
-  color: black;
-  padding-left: 5px;
+  background-color: CBF3F0;
   padding-right: 5px;
+  border: 1px solid CBF3F0;
+  border-radius: 30%;
 
+  
 }
 a:link {
   text-decoration: none;
