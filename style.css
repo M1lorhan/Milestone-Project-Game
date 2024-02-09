@@ -5,27 +5,63 @@
     min-width: 100%;
     min-height: 50%;
     z-index: -1;
-  }
-  h1 {
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    font-size: 5em;
-    font-family: "Lugrasimo", cursive;
-    color: FF57BB;
-  }
+}
 
-  div {
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    font-size: 3em;
-    font-family: "Lugrasimo", cursive;
-    color: FF57BB;
-  }
+#CasinoName {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  font-family: "Lugrasimo", cursive;
+  color: ff9f1c;
+}
 
-  footer {
-    border: chocolate;
-    background-color: #0e685f;
-    z-index: 1;
-  }
+h1 {
+  font-size: 5em;
+  color: ff9f1c;
+}
+
+p {
+  font-size: 3em;
+  color: FFBF69;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  margin: 1em;
+  width: 95%;
+  border: 1em solid black;
+  background-color: darkgreen;
+  border-radius: 10%;
+  z-index: 2;
+  height: 15em;
+}
+
+#cardTable{
+  display: flex;
+}
+
+h2 {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 5;
+  height: 7em;
+  width: 38vw;
+  text-align: center;
+  color: 2EC4B6;
+}
+
+div{
+  color: CBF3F0;
+}
+
+#Bet {
+  text-align: center;
+  flex-grow: 1;
+  height: 7em;
+  width: 10vw;
+}
+
+#Purse {
+  padding-left: 5em;
+}
