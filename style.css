@@ -34,13 +34,9 @@ p {
 .dealCards {
   display: flex;
   justify-content: center;
-  background-color: red;
-  color: white;
-  Border: 2px solid black;
   text-align: center;
-  box-shadow: 1px 1px 1px black;
-  font-size: 2em;
-  width: 2em;
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 footer {
@@ -70,16 +66,17 @@ h2 {
 }
 
 .playerCards {
-  height: 6em
+  height: 7em
 }
 
 .dealerCards {
-  height: 6em;
+  height: 7em;
 }
 
 div{
   text-align: center;
   color: CBF3F0;
+
 }
 
 #Bet {
@@ -87,6 +84,7 @@ div{
   flex-grow: 1;
   height: 2em;
   width: 10vw;
+  font-weight: bold;
 }
 #Pot {
   text-align: center;
