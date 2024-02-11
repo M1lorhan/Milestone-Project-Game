@@ -19,7 +19,7 @@
         Alt = “Video by Christopher Schultz: https://www.pexels.com/video/beautiful-scenery-of-a-seashore-5147338/”>
               </video>
     <div>
-        <div class = "dealCards"><button onclick = "dealCards(),hitMeButton(),stayButton()" id="createButton" class = "dealCards">
+        <div class = "dealCards"><button onclick = "deal(),hitMeButton(),stayButton()" id="createButton" class = "dealCards">
             Deal!</button></div>
         <span id="dealCardsContainer"></span>
     </div>
@@ -29,7 +29,7 @@
     <div>
         <h2><span id="playerName">Player One</span></h2>
             <button onclick="updateName()">Update Name</button>
-            <div class = "playerCards"></div>
+            <div id="playerHand"></div>
     </div>
     <div>
         <div id = "Bet">Place your bet!</div>
@@ -40,7 +40,7 @@
     </div>
     <div>
         <h2>Dealer Cards</h2>
-            <div class = "dealerCards"></div>
+            <div id="dealerHand"></div>
     </div>
     </container>
         
