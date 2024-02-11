@@ -22,45 +22,34 @@
         <div class = "dealCards"><button onclick = "dealCards(),hitMeButton(),stayButton()" id="createButton" class = "dealCards">
             Deal!</button></div>
         <span id="dealCardsContainer"></span>
+    </div>
 </body>
-<footer id = "CardTable"> 
+<footer>
+    <container id = "CardTable">
     <div>
-    <div id = "CardTable">
-    <div>
-        <h2 id = "playerName">Player Cards</h2>
-        <div class = "playerCards"></div>
+        <h2><span id="playerName">Player One</span></h2>
+            <button onclick="updateName()">Update Name</button>
+            <div class = "playerCards"></div>
     </div>
     <div>
-    <div>
-    <div>Place your Bet!</div>
-    <div id = "Bet">
-        <button onclick= "BetFive();subtractFive()">$5</button>
-        <button onclick= "BetTen();subtractTen()">$10</button>
-        <button onclick= "BetTwenty();subtractTwenty()">$20</button>
-    </div>
+        <div id = "Bet">Place your bet!</div>
+        <input type="number" id="amountToTransfer" placeholder="Bet Amount">
+            <button id = "bet" onclick="transferFunds()">Bet!</button>
+                <div id = "Pot">Pot: $<span id="potBalance">0</span></div>
+                <div id = "Purse">Purse: $<span id="purseBalance">500</span></div>
     </div>
     <div>
-    <div id="playerPot">Player Pot</div>
-    <span>$</span><span id="betOutput">0</span>
+        <h2>Dealer Cards</h2>
+            <div class = "dealerCards"></div>
     </div>
-    <div>
-    <div id = "playerPurse">Player Purse:</div>
-    <span>$</span><span id = "purse">500</span>
-    </div>
-    </div>
-    <div>
-    <h2>Dealer Cards</h2>
-    <div class = "dealerCards"></div>
-    </div>
-</div>
-
-<ul>
-    <div>
-    <div>Help:</div>
-    <li><a href="https://www.gamblersanonymous.org/ga/">Gamblers Anonymous</a></li>
-    <li><a href="https://www.aa.org/">Alcoholics Anonymous</a></li>
-    </div>
-</ul>
-
+    </container>
+        
+    <container class = "help">
+        <ul class = "help">
+            <li><a href="https://www.gamblersanonymous.org/ga/">Gamblers Anonymous</a></li>
+            <li><a href="https://www.aa.org/">Alcoholics Anonymous</a></li>
+        </ul>
+    </container>
+        
 </footer>
 </html>
