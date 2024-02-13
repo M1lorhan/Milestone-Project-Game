@@ -19,25 +19,10 @@ function transferFunds() {
 
 //* add deal function to deal cards to player & dealer cards array. */
 
-function deal() {
-    var deck = createDeck();
-    shuffle(deck);
-    var hands = dealInitialCards(deck);
-    renderHand('playerHand', hands.playerHand);
-    renderHand('dealerHand', [hands.dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
-}
+var deck = createDeck(); // Initialize deck
+var playerHand = []; // Initialize player's hand
+var dealerHand = []; // Initialize dealer's hand
 
-function renderHand(containerId, hand) {
-    var container = document.getElementById(containerId);
-    container.innerHTML = ''; // Clear the container
-    hand.forEach(function(card) {
-        var cardImage = document.createElement('img');
-        cardImage.src = card.image;
-        container.appendChild(cardImage);
-    });
-}
-
-// Function to create a deck of cards
 function createDeck() {
     var suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
     var ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
@@ -56,7 +41,6 @@ function createDeck() {
     return deck;
 }
 
-// Function to shuffle the deck
 function shuffle(deck) {
     for (var i = deck.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -66,24 +50,63 @@ function shuffle(deck) {
     }
 }
 
-// Function to deal cards to a player
-function dealCard(deck, playerHand) {
-    var card = deck.pop();
-    playerHand.push(card);
+function deal() {
+    shuffle(deck);
+    var hands = dealInitialCards(deck);
+    playerHand = hands.playerHand;
+    dealerHand = hands.dealerHand;
+    renderHand('player-hand', playerHand);
+    renderHand('dealer-hand', [dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
+    createButtons();
 }
 
-// Function to deal initial cards to the player and dealer
-function dealInitialCards(deck) {
-    var playerHand = [];
-    var dealerHand = [];
-    dealCard(deck, playerHand);
-    dealCard(deck, dealerHand);
-    dealCard(deck, playerHand);
-    dealCard(deck, dealerHand);
-    return { playerHand: playerHand, dealerHand: dealerHand };
+function createButtons() {
+    var buttonContainer = document.createElement('div');
+    buttonContainer.id = 'button-container';
+
+    var hitMeButton = document.createElement('button');
+    hitMeButton.textContent = 'Hit Me';
+    hitMeButton.className = 'game-button';
+    hitMeButton.onclick = hitMe;
+    buttonContainer.appendChild(hitMeButton);
+
+    var stayButton = document.createElement('button');
+    stayButton.textContent = 'Stay';
+    stayButton.className = 'game-button';
+    stayButton.onclick = stay;
+    buttonContainer.appendChild(stayButton);
+
+    document.body.appendChild(buttonContainer);
 }
 
-// Function to get the value of a card
+function hitMe() {
+    dealCard(deck, playerHand);
+    renderHand('playerHand', playerHand);
+}
+
+
+function stay() {
+    // Add logic for dealer's turn (reveal hidden card and draw until threshold)
+    renderHand('dealer-hand', dealerHand); // Reveal dealer's hidden card
+    // Dealer draws cards until threshold is met
+    while (calculateHandTotal(dealerHand) < 17) {
+        dealCard(deck, dealerHand);
+        renderHand('dealer-hand', dealerHand);
+    }
+    // Determine winner
+    determineWinner();
+}
+
+function renderHand(containerId, hand) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear the container
+    hand.forEach(function(card) {
+        var cardImage = document.createElement('img');
+        cardImage.src = card.image;
+        container.appendChild(cardImage);
+    });
+}
+
 function getValue(rank) {
     if (rank === 'Ace') {
         return 11; // Assuming Ace is worth 11 initially
@@ -94,69 +117,36 @@ function getValue(rank) {
     }
 }
 
-// Function to get the URL of the card image
 function getImageUrl(rank, suit) {
     // Construct the URL based on the rank and suit (assuming images are stored in a folder named "images")
     return './assets/PNG-cards-1.3/' + rank.toLowerCase() + '_of_' + suit.toLowerCase() + '.png';
 }
 
-//* Create "Hit Me" & "Stay" Buttons. - help from Chat GPT */
- 
-function hitMeButton(){
-	var newButton = document.createElement('button');
-    newButton.textContent = 'Hit Me!';
-    newButton.classList.add('styledButton');
-
-    newButton.addEventListener('click', function() {
-        alert('Hit Me button clicked!').class.dealCards;
-    });
-
-    var buttonContainer = document.getElementById('dealCardsContainer');
-    dealCardsContainer.appendChild(newButton);
-
+function dealInitialCards(deck) {
+    var playerHand = [];
+    var dealerHand = [];
+    dealCard(deck, playerHand);
+    dealCard(deck, dealerHand);
+    dealCard(deck, playerHand);
+    dealCard(deck, dealerHand);
+    return { playerHand: playerHand, dealerHand: dealerHand };
 }
 
-function stayButton(){
-	var newButton = document.createElement('button');
-    newButton.textContent = 'Stay!';
-    newButton.classList.add('styledButton');
-    
-    // Add event listener to the new button (optional)
-    newButton.addEventListener('click', function() {
-        alert('Stay button clicked!');
-    });
-
-    // Append the new button to the container
-    var buttonContainer = document.getElementById('dealCardsContainer');
-    dealCardsContainer.appendChild(newButton);
-
+function dealCard(deck, playerHand) {
+    var card = deck.pop();
+    playerHand.push(card);
 }
 
 //* create function to evaluate for winner & update purse */
 
-/* function onDeal(){
-
-    var outputElement = document.getElementById("output");
-// Example variable representing some condition
-    var condition = true;
-
+function determineWinner(){
     if (playerHandValue == 21 && dealerHandValue == 21) {
         outputElement.textContent = "Push";
     } else if (playerHandValue == 21 && dealerHandValue < 21) {
         outputElement.textContent = "Player Wins";
-    } else (playerHandValue < 21 && dealerHandValue == 21) 
+    } else if (playerHandValue < 21 && dealerHandValue == 21) 
         outputElement.textContent = "Dealer Wins";
-}
-
-function onHitMe(){
-    if (playerHandValue == 21) {
-        outputElement.textContent = "PlayerWins";
-    } else (playerHandValue > 21) 
-        outputElement.textContent = "Dealer Wins";
-}
-
-function onStay(){
-    if (playerHandValue == 20 && dealerHandValue == 20) {
+    else if (playerHandValue == 20 && dealerHandValue == 20) {
     outputElement.textContent = "Push";
     } else if (playerHandValue > 20 && playerCards == dealerHandValue && dealerHandValue == 21) {
         outputElement.textContent = "Push";
@@ -191,7 +181,6 @@ function onStay(){
     return playerCards;
 }
 
-let playerHand = []; 
 let playerHandValue = calculatePlayerHandValue(playerHand);
 return("Hand value:", playerHandValue);
 
@@ -216,7 +205,6 @@ function calculateDealerHandValue(dealerHand) {
     return dealerCards;
 }
 
-let dealerHand = []; 
 let dealerHandValue = calculateDealerHandValue(dealerHand);
 return("Hand value:", dealerHandValue); 
 
@@ -252,7 +240,7 @@ if (isOver21) {
 
 //* function to remove "hit me" & "button" on result */
 
-function removeButtons(outcome) {
+/* function removeButtons(outcome) {
     var hitMeButton = document.getElementById("hitMeButton");
     var stayButton = document.getElementById("stayButton");
 
@@ -265,4 +253,4 @@ function removeButtons(outcome) {
 
 // Example usage:
 // Assume "win", "loss", or "push" as game outcome
-removeButtons("win");
+removeButtons("win"); */
