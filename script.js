@@ -135,93 +135,79 @@ function getImageUrl(rank, suit) {
     return './assets/PNG-cards-1.3/' + rank.toLowerCase() + '_of_' + suit.toLowerCase() + '.png';
 }
 
-//* create function to evaluate for winner & update purse */
-
-/* function onDeal(){
-
-    var outputElement = document.getElementById("output");
-// Example variable representing some condition
-    var condition = true;
-
-    if (playerHandValue == 21 && dealerHandValue == 21) {
-        outputElement.textContent = "Push";
-    } else if (playerHandValue == 21 && dealerHandValue < 21) {
-        outputElement.textContent = "Player Wins";
-    } else (playerHandValue < 21 && dealerHandValue == 21) 
-        outputElement.textContent = "Dealer Wins";
-}
-
-function onHitMe(){
-    if (playerHandValue == 21) {
-        outputElement.textContent = "PlayerWins";
-    } else (playerHandValue > 21) 
-        outputElement.textContent = "Dealer Wins";
-}
-
-function onStay(){
-    if (playerHandValue == 20 && dealerHandValue == 20) {
-    outputElement.textContent = "Push";
-    } else if (playerHandValue > 20 && playerCards == dealerHandValue && dealerHandValue == 21) {
-        outputElement.textContent = "Push";
-    } else if (playerHandValue == 21 && dealerHandValue < 21) {
-        outputElement.textContent = "Player Wins";
-    } else (playerHandValue < 21 && dealerHandValue == 21) 
-        outputElement.textContent = "Dealer Wins";
-
-
-}
-
 // function to calculate hand value.  help from ChatGPT
 
- function calculatePlayerHandValue(playerHand) {
+function calculatePlayerHandValue(playerHand) {
     let playerCards = 0;
     let aceCount = 0;
 
     for (let card of playerHand) {
-        if (card === "A") {
-            aceCount++; playerCards += 11;
-        } else if (card === "J" || card === "Q" || card === "K") {
-            playerCards += 10; 
+        if (card.rank === "Ace") {
+            aceCount++;
+            playerCards += 11;
+        } else if (["Jack", "Queen", "King"].includes(card.rank)) {
+            playerCards += 10;
         } else {
-            playerCards += parseInt(card); 
+            playerCards += parseInt(card.rank);
         }
     }
 
     while (playerCards > 21 && aceCount > 0) {
-        playerCards -= 10; aceCount--; 
+        playerCards -= 10;
+        aceCount--;
     }
 
     return playerCards;
 }
-
-let playerHand = []; 
-let playerHandValue = calculatePlayerHandValue(playerHand);
-return("Hand value:", playerHandValue);
 
 function calculateDealerHandValue(dealerHand) {
     let dealerCards = 0;
     let aceCount = 0;
 
     for (let card of dealerHand) {
-        if (card === "A") {
-            aceCount++; dealerCards += 11; 
-        } else if (card === "J" || card === "Q" || card === "K") {
+        if (card.rank === "Ace") {
+            aceCount++;
+            dealerCards += 11;
+        } else if (["Jack", "Queen", "King"].includes(card.rank)) {
             dealerCards += 10;
         } else {
-            dealerCards += parseInt(card);
+            dealerCards += parseInt(card.rank);
         }
     }
 
     while (dealerCards > 21 && aceCount > 0) {
-        dealerCards -= 10; aceCount--; 
+        dealerCards -= 10;
+        aceCount--;
     }
 
     return dealerCards;
 }
 
-let dealerHand = []; 
+let playerHandValue = calculatePlayerHandValue(playerHand);
+console.log("Player Hand value:", playerHandValue);
+
 let dealerHandValue = calculateDealerHandValue(dealerHand);
-return("Hand value:", dealerHandValue); 
+console.log("Dealer Hand value:", dealerHandValue);
+
+function determineWinner() {
+    if (playerHandValue === 21 && dealerHandValue === 21) {
+        message = "Push";
+    } else if (playerHandValue === 21 && dealerHandValue < 21) {
+        message = "Player Wins";
+    } else if (playerHandValue < 21 && dealerHandValue === 21) {
+        message = "Dealer Wins";
+    } else if (playerHandValue === dealerHandValue) {
+        message = "Push";
+    } else if (playerHandValue > 21) {
+        message = "Dealer Wins";
+    } else if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
+        message = "Player Wins";
+    } else {
+        message = "Dealer Wins";
+    }
+    alert(message);
+}
+
 
 
 //* create function onWin to offer drink to player */
