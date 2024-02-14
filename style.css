@@ -34,21 +34,22 @@ p {
   font-weight: bold;
 }
 
-.styledButton {
+.hit-me-button, .stay-button {
   justify-content: center;
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
 }
 
-#button-container {
+.button-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
 }
-.game-button {
+
+.game-button, .hit-me-button, .stay-button {
   margin: 10px;
   padding: 10px 20px;
   font-size: 16px;

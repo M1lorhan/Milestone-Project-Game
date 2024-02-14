@@ -12,16 +12,17 @@ function transferFunds() {
         document.getElementById('purseBalance').textContent = newPurseBalance.toFixed(2);
         document.getElementById('potBalance').textContent = newPotBalance.toFixed(2);
 
+    } else if (potBalance === 0) {
+        alert("Invalid bet amount. Pot balance is zero.");
     } else {
-        alert("Max Bet ");
+        alert("Max bet reached or invalid amount.");
     }
-} 
+}
 
 //* add deal function to deal cards to player & dealer cards array. */
 
-var deck = createDeck(); // Initialize deck
-var playerHand = []; // Initialize player's hand
-var dealerHand = []; // Initialize dealer's hand
+var deck = createDeck();
+var hands;
 
 function createDeck() {
     var suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
@@ -52,48 +53,58 @@ function shuffle(deck) {
 
 function deal() {
     shuffle(deck);
-    var hands = dealInitialCards(deck);
-    playerHand = hands.playerHand;
-    dealerHand = hands.dealerHand;
-    renderHand('player-hand', playerHand);
-    renderHand('dealer-hand', [dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
-    createButtons();
+    hands = dealInitialCards(deck);
+    renderHand('playerHand', hands.playerHand);
+    renderHand('dealerHand', [hands.dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
+    createHitMeButton();
+    createStayButton();
 }
 
-function createButtons() {
-    var buttonContainer = document.createElement('div');
-    buttonContainer.id = 'button-container';
+// Function to deal initial cards to the player and dealer
+function dealInitialCards(deck) {
+    var playerHand = [];
+    var dealerHand = [];
+    dealCard(deck, playerHand);
+    dealCard(deck, dealerHand);
+    dealCard(deck, playerHand);
+    dealCard(deck, dealerHand);
+    return { playerHand: playerHand, dealerHand: dealerHand };
+}
 
+// Function to deal cards to a player
+function dealCard(deck, playerHand) {
+    var card = deck.pop();
+    playerHand.push(card);
+}
+
+function createHitMeButton() {
     var hitMeButton = document.createElement('button');
     hitMeButton.textContent = 'Hit Me';
-    hitMeButton.className = 'game-button';
     hitMeButton.onclick = hitMe;
-    buttonContainer.appendChild(hitMeButton);
+    hitMeButton.classList.add('hit-me-button');
+    document.body.appendChild(hitMeButton);
+}    
 
+function createStayButton() {
     var stayButton = document.createElement('button');
     stayButton.textContent = 'Stay';
-    stayButton.className = 'game-button';
     stayButton.onclick = stay;
-    buttonContainer.appendChild(stayButton);
-
-    document.body.appendChild(buttonContainer);
+    stayButton.classList.add('stay-button');
+    document.body.appendChild(stayButton);
 }
 
 function hitMe() {
-    dealCard(deck, playerHand);
-    renderHand('playerHand', playerHand);
+    dealCard(deck, hands.playerHand);
+    renderHand('playerHand', hands.playerHand);
+
 }
 
-
 function stay() {
-    // Add logic for dealer's turn (reveal hidden card and draw until threshold)
-    renderHand('dealer-hand', dealerHand); // Reveal dealer's hidden card
-    // Dealer draws cards until threshold is met
-    while (calculateHandTotal(dealerHand) < 17) {
+    renderHand('dealerHand', hands.dealerHand);
+    while (calculateHandValue(dealerHand) < 17) {
         dealCard(deck, dealerHand);
-        renderHand('dealer-hand', dealerHand);
     }
-    // Determine winner
+    // Determine the winner
     determineWinner();
 }
 
@@ -107,6 +118,7 @@ function renderHand(containerId, hand) {
     });
 }
 
+// Function to get the value of a card
 function getValue(rank) {
     if (rank === 'Ace') {
         return 11; // Assuming Ace is worth 11 initially
@@ -117,36 +129,37 @@ function getValue(rank) {
     }
 }
 
+// Function to get the URL of the card image
 function getImageUrl(rank, suit) {
     // Construct the URL based on the rank and suit (assuming images are stored in a folder named "images")
     return './assets/PNG-cards-1.3/' + rank.toLowerCase() + '_of_' + suit.toLowerCase() + '.png';
 }
 
-function dealInitialCards(deck) {
-    var playerHand = [];
-    var dealerHand = [];
-    dealCard(deck, playerHand);
-    dealCard(deck, dealerHand);
-    dealCard(deck, playerHand);
-    dealCard(deck, dealerHand);
-    return { playerHand: playerHand, dealerHand: dealerHand };
-}
-
-function dealCard(deck, playerHand) {
-    var card = deck.pop();
-    playerHand.push(card);
-}
-
 //* create function to evaluate for winner & update purse */
 
-function determineWinner(){
+/* function onDeal(){
+
+    var outputElement = document.getElementById("output");
+// Example variable representing some condition
+    var condition = true;
+
     if (playerHandValue == 21 && dealerHandValue == 21) {
         outputElement.textContent = "Push";
     } else if (playerHandValue == 21 && dealerHandValue < 21) {
         outputElement.textContent = "Player Wins";
-    } else if (playerHandValue < 21 && dealerHandValue == 21) 
+    } else (playerHandValue < 21 && dealerHandValue == 21) 
         outputElement.textContent = "Dealer Wins";
-    else if (playerHandValue == 20 && dealerHandValue == 20) {
+}
+
+function onHitMe(){
+    if (playerHandValue == 21) {
+        outputElement.textContent = "PlayerWins";
+    } else (playerHandValue > 21) 
+        outputElement.textContent = "Dealer Wins";
+}
+
+function onStay(){
+    if (playerHandValue == 20 && dealerHandValue == 20) {
     outputElement.textContent = "Push";
     } else if (playerHandValue > 20 && playerCards == dealerHandValue && dealerHandValue == 21) {
         outputElement.textContent = "Push";
@@ -181,6 +194,7 @@ function determineWinner(){
     return playerCards;
 }
 
+let playerHand = []; 
 let playerHandValue = calculatePlayerHandValue(playerHand);
 return("Hand value:", playerHandValue);
 
@@ -205,6 +219,7 @@ function calculateDealerHandValue(dealerHand) {
     return dealerCards;
 }
 
+let dealerHand = []; 
 let dealerHandValue = calculateDealerHandValue(dealerHand);
 return("Hand value:", dealerHandValue); 
 
