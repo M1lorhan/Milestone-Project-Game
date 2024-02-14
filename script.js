@@ -183,11 +183,9 @@ function calculateDealerHandValue(dealerHand) {
     return dealerCards;
 }
 
+// Now you can use playerHand and dealerHand variables in your functions
 let playerHandValue = calculatePlayerHandValue(playerHand);
-console.log("Player Hand value:", playerHandValue);
-
 let dealerHandValue = calculateDealerHandValue(dealerHand);
-console.log("Dealer Hand value:", dealerHandValue);
 
 function determineWinner() {
     if (playerHandValue === 21 && dealerHandValue === 21) {
