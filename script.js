@@ -21,8 +21,21 @@ function transferFunds() {
 
 //* add deal function to deal cards to player & dealer cards array. */
 
+var playerHand = [];
+var dealerHand = [];
 var deck = createDeck();
 var hands;
+
+function deal() {
+    shuffle(deck);
+    hands = dealInitialCards(deck);
+    playerHand = hands.playerHand; // Assign dealt hands to playerHand and dealerHand arrays
+    dealerHand = hands.dealerHand;
+    renderHand('playerHand', hands.playerHand);
+    renderHand('dealerHand', [hands.dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
+    createHitMeButton();
+    createStayButton();
+}
 
 function createDeck() {
     var suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
@@ -51,19 +64,8 @@ function shuffle(deck) {
     }
 }
 
-function deal() {
-    shuffle(deck);
-    hands = dealInitialCards(deck);
-    renderHand('playerHand', hands.playerHand);
-    renderHand('dealerHand', [hands.dealerHand[0], { rank: 'Hidden', suit: '', value: 0, image: './assets/PNG-cards-1.3/Card-Back-05.png' }]);
-    createHitMeButton();
-    createStayButton();
-}
-
 // Function to deal initial cards to the player and dealer
 function dealInitialCards(deck) {
-    var playerHand = [];
-    var dealerHand = [];
     dealCard(deck, playerHand);
     dealCard(deck, dealerHand);
     dealCard(deck, playerHand);
@@ -94,17 +96,18 @@ function createStayButton() {
 }
 
 function hitMe() {
-    dealCard(deck, hands.playerHand);
-    renderHand('playerHand', hands.playerHand);
-
+    dealCard(deck, playerHand);
+    renderHand('playerHand', playerHand);
+    playerHandValue = calculatePlayerHandValue(playerHand);
 }
 
 function stay() {
-    renderHand('dealerHand', hands.dealerHand);
-    while (calculateHandValue(dealerHand) < 17) {
+    renderHand('dealerHand', dealerHand);
+    while (calculateDealerHandValue(dealerHand) < 17) {
         dealCard(deck, dealerHand);
     }
-    // Determine the winner
+    playerHandValue = calculatePlayerHandValue(playerHand);
+    dealerHandValue = calculateDealerHandValue(dealerHand);
     determineWinner();
 }
 
@@ -192,21 +195,52 @@ function determineWinner() {
         message = "Push";
     } else if (playerHandValue === 21 && dealerHandValue < 21) {
         message = "Player Wins";
+        updatePurse(betAmount * 2);
     } else if (playerHandValue < 21 && dealerHandValue === 21) {
         message = "Dealer Wins";
+        clearPot();
     } else if (playerHandValue === dealerHandValue) {
         message = "Push";
     } else if (playerHandValue > 21) {
         message = "Dealer Wins";
+        clearPot();
     } else if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
         message = "Player Wins";
+        updatePurse(betAmount * 2);
     } else {
         message = "Dealer Wins";
+        clearPot();
     }
     alert(message);
+    clearHands();
+    removeButtons();
 }
 
+function updatePurse(winnings) {
+    var betAmount = parseFloat(document.getElementById('amountToTransfer').value);
+    var purseBalance = parseFloat(document.getElementById('purseBalance').textContent);
 
+    var newPurseBalance = purseBalance - betAmount + winnings;
+    document.getElementById('purseBalance').textContent = newPurseBalance.toFixed(2);
+}
+
+function clearPot() {
+    var betAmount = parseFloat(document.getElementById('amountToTransfer').value);
+    var potBalance = parseFloat(document.getElementById('potBalance').textContent);
+
+    var newPotBalance = potBalance - betAmount;
+    document.getElementById('potBalance').textContent = newPotBalance.toFixed(2);
+}
+
+function clearHands() {
+    // Clear playerHand and dealerHand arrays
+    playerHand = [];
+    dealerHand = [];
+    
+    // Clear playerHand and dealerHand HTML containers
+    document.getElementById('playerHand').innerHTML = '';
+    document.getElementById('dealerHand').innerHTML = '';
+}
 
 //* create function onWin to offer drink to player */
 
@@ -239,17 +273,15 @@ if (isOver21) {
 
 //* function to remove "hit me" & "button" on result */
 
-/* function removeButtons(outcome) {
-    var hitMeButton = document.getElementById("hitMeButton");
-    var stayButton = document.getElementById("stayButton");
+function removeButtons() {
+    var hitMeButton = document.querySelector('.hit-me-button');
+    var stayButton = document.querySelector('.stay-button');
+    
+    if (hitMeButton && hitMeButton.parentNode) {
+        hitMeButton.parentNode.removeChild(hitMeButton);
+    }
 
-    if (outcome === "win" || outcome === "loss" || outcome === "push") {
-        // Remove the buttons from the DOM
-        hitMeButton.remove();
-        stayButton.remove();
+    if (stayButton && stayButton.parentNode) {
+        stayButton.parentNode.removeChild(stayButton);
     }
 }
-
-// Example usage:
-// Assume "win", "loss", or "push" as game outcome
-removeButtons("win"); */
