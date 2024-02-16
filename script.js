@@ -1,5 +1,7 @@
 //* add bet function to add funds to pot and and subtract funds from purse. - help from Chat GPT */
 
+
+
 function transferFunds() {
     var amountToTransfer = parseFloat(document.getElementById('amountToTransfer').value);
     var purseBalance = parseFloat(document.getElementById('purseBalance').textContent);
@@ -107,9 +109,16 @@ function createStayButton() {
 }
 
 function hitMe() {
+    var luckRange = 0.5; 
+    if (drinkAccepted) {
+        luckRange = 0.8; 
+    }
+
+    var luck = Math.random() * luckRange + 0.5; 
+
     dealCard(deck, playerHand);
     renderHand('playerHand', playerHand);
-    playerHandValue = calculatePlayerHandValue(playerHand);
+    playerHandValue = calculatePlayerHandValue(playerHand) * luck; 
 }
 
 function stay() {
@@ -271,13 +280,17 @@ function offerDrink() {
 
     if (response === "yes") {
         imageSrc = "./assets/mai-tai.jpg"
+        drinkAccepted = true;
+        document.body.classList.add('blur-effect');
             } else {
         imageSrc = "./assets/pexels-ron-lach-8879621.jpg"; 
+        drinkAccepted = false;
+        document.body.classList.remove('blur-effect');
 
     var drinkImage = document.createElement('img');
     drinkImage.src = imageSrc;
     document.body.appendChild(drinkImage);
-}
+}   
 }
 
 //* create function onDrink to change luck & blur to screen */
