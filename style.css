@@ -60,6 +60,11 @@ p {
   border-radius: 5px;
 }
 
+#drinkImage {
+  height: 4em;
+  width: auto;
+}
+
 footer {
   position: absolute;
   bottom: 0;
