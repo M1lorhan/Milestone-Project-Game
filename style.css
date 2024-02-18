@@ -1,10 +1,7 @@
-#background {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 50%;
-    z-index: -1;
+body {
+  background-image: url('./assets/pexels-asad-photo-maldives-1450353.jpg');
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 #CasinoName {
