@@ -1,27 +1,34 @@
 //* add bet function to add funds to pot and and subtract funds from purse. - help from Chat GPT */
 
-
+var initialPotBalance = 0
+var initialPurseBalance = 500
 
 function transferFunds() {
-    var amountToTransfer = parseFloat(document.getElementById('amountToTransfer').value);
+    // Get the transfer amount from the input field
     var purseBalance = parseFloat(document.getElementById('purseBalance').textContent);
     var potBalance = parseFloat(document.getElementById('potBalance').textContent);
-        
+    var amountToTransfer = parseFloat(document.getElementById('amountToTransfer').value);
+    
+    // Check if the transfer amount is valid
     if (!isNaN(amountToTransfer) && amountToTransfer > 0) {
+        // Check if the transfer amount is within the purse balance
         if (amountToTransfer <= purseBalance) {
+            // Calculate new purse and pot balances after transfer
             var newPurseBalance = purseBalance - amountToTransfer;
             var newPotBalance = potBalance + amountToTransfer;
 
+            // Update the purse and pot balance elements in the DOM
             document.getElementById('purseBalance').textContent = newPurseBalance.toFixed(2);
             document.getElementById('potBalance').textContent = newPotBalance.toFixed(2);
         } else {
+            // Alert if transfer amount exceeds purse balance
             alert("Insufficient funds in your purse.");
         }
     } else {
+        // Alert if transfer amount is invalid
         alert("Invalid amount to transfer.");
     }
 }
-
 
 function disableDealButton() {
     var dealButton = document.getElementById('createButton');
@@ -109,16 +116,9 @@ function createStayButton() {
 }
 
 function hitMe() {
-    var luckRange = 0.5; 
-    if (drinkAccepted) {
-        luckRange = 0.8; 
-    }
-
-    var luck = Math.random() * luckRange + 0.5; 
-
     dealCard(deck, playerHand);
     renderHand('playerHand', playerHand);
-    playerHandValue = calculatePlayerHandValue(playerHand) * luck; 
+    playerHandValue = calculatePlayerHandValue(playerHand); 
 }
 
 function stay() {
@@ -211,14 +211,33 @@ let dealerHandValue = calculateDealerHandValue(dealerHand);
 
 function determineWinner() {
     let message;
+    let playerHasAce = false;
+    let playerHasFaceCard = false;
+
+    // Check if the player's hand contains an Ace and a face card
+    for (let card of playerHand) {
+        if (card.rank === 'Ace') {
+            playerHasAce = true;
+        } else if (['King', 'Queen', 'Jack'].includes(card.rank)) {
+            playerHasFaceCard = true;
+        }
+    }
+
+    // Calculate winnings based on the player's hand
+    let winningsMultiplier = 1; // Default multiplier
+    if (playerHasAce && playerHasFaceCard) {
+        winningsMultiplier = 1.5; // 150% of the bet
+    }
+
     switch (true) {
         case playerHandValue === 21 && dealerHandValue === 21:
             message = "Push";
             break;
         case playerHandValue === 21 && dealerHandValue < 21:
             message = "Congratulations, You Win!";
-            updatePurse(potBalance * 2);
+            updatePurse();
             offerDrink();
+            clearPot();
             break;
         case playerHandValue < 21 && dealerHandValue === 21:
             message = "The house wins";
@@ -233,8 +252,9 @@ function determineWinner() {
             break;
         case dealerHandValue > 21 || playerHandValue > dealerHandValue:
             message = "Congratulations, You Win!";
-            updatePurse(potBalance * 2);
+            updatePurse();
             offerDrink();
+            clearPot();
             break;
         default:
             message = "The house wins";
@@ -246,23 +266,30 @@ function determineWinner() {
     removeButtons();
 }
 
-function updatePurse(winnings, betAmount, potBalance) {
-    var betAmount = parseFloat(document.getElementById('amountToTransfer').value);
+function updatePurse() {
     var purseBalance = parseFloat(document.getElementById('purseBalance').textContent);
     var potBalance = parseFloat(document.getElementById('potBalance').textContent);
+    
+    // Calculate winnings as potBalance * 2
+    var winnings = potBalance * 2;
 
-    if (!isNaN(potBalance) && !isNaN(betAmount)) {
-        var newPurseBalance = purseBalance - betAmount + winnings;
+    if (!isNaN(purseBalance) && !isNaN(winnings)) {
+        var newPurseBalance = purseBalance + winnings;
         document.getElementById('purseBalance').textContent = newPurseBalance.toFixed(2);
     } else {
-        console.error("Pot balance or bet amount is not a valid number.");
+        console.error("Purse balance or winnings is not a valid number.");
     }
 }
 
 function clearPot() {
-    var betAmount = parseFloat(document.getElementById('amountToTransfer').value);
-    var newPotBalance = potBalance - betAmount;
-    document.getElementById('potBalance').textContent = newPotBalance.toFixed(2);
+    var newPotBalance = initialPotBalance;
+    var potBalanceElement = document.getElementById('potBalance');
+    
+    if (potBalanceElement) {
+        potBalanceElement.textContent = newPotBalance.toFixed(2);
+    } else {
+        console.error("Pot balance element not found.");
+    }
 }
 
 function clearHands() {
@@ -285,13 +312,13 @@ function offerDrink() {
             } else {
         imageSrc = "./assets/pexels-ron-lach-8879621.jpg"; 
         drinkAccepted = false;
-        document.body.classList.remove('blur-effect');
+        document.body.classList.remove('blur-effect')};
 
     var drinkImage = document.createElement('img');
     drinkImage.src = imageSrc;
     document.body.appendChild(drinkImage);
 }   
-}
+
 
 //* create function onDrink to change luck & blur to screen */
 
