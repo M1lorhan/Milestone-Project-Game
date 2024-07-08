@@ -104,6 +104,8 @@ function createHitMeButton() {
     hitMeButton.textContent = 'Hit Me';
     hitMeButton.onclick = hitMe;
     hitMeButton.classList.add('hit-me-button');
+    hitMeButton.style.display = 'block';
+    hitMeButton.style.margin = '5 auto';
     document.body.appendChild(hitMeButton);
 }    
 
@@ -112,6 +114,8 @@ function createStayButton() {
     stayButton.textContent = 'Stay';
     stayButton.onclick = stay;
     stayButton.classList.add('stay-button');
+    stayButton.style.display = 'block'; 
+    stayButton.style.margin = '5 auto'; 
     document.body.appendChild(stayButton);
 }
 
@@ -326,13 +330,13 @@ function offerDrink() {
 //* create to check age & update player name. help from ChatGPT */
 
 function updateName() {
-    var newName = prompt("Please enter the new player name:");
+    var newName = prompt("Please enter your name:");
 
     if (newName !== null && newName.trim() !== "") {
         var playerNameElement = document.getElementById("playerName");
         playerNameElement.textContent = newName + "'s Cards";
     } else {
-        alert("No new name entered.");
+        alert("No name entered.");
     }
 }
 

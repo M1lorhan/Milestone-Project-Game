@@ -1,22 +1,24 @@
 <!DOCTYPE html lang = "en">
 <head>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="scss/style.css">
+<link rel="stylesheet" href="scss/style.css" />
 <script src="cards.js" type="module"></script>
 <script src="script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Englebert&family=Lugrasimo&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&family=Gruppo&family=Lugrasimo&display=swap" rel="stylesheet">
 
 </head>
 <body>
-    <h1 id= "CasinoName">
-        Tropical Island Blackjack!</h1>
-        <p id = "CasinoName">Win Big!</p>
-        <div id = "game-button">
-        <div class = "dealCards">
-            <button onclick = "deal()" id="createButton" class = "dealCards">Deal!</button>
+    <div id ="CasinoName">
+    <h1 id ="CasinoName">Tropical Island Blackjack!</h1>
+        <p id ="CasinoName">Win Big!</p>
+        <div id ="game-button">
+        <div class ="dealCards">
+            <button onclick ="deal()" id="createButton" class="dealCards">Deal!</button>
+            <div class="button-container" id="dealCardsContainer"></div>
         </div>
-        <span class = "button-container" id="dealCardsContainer"></span>
+    </div>
     </div>
 
     <div class = "drinkImage" alt = "Bali Hai Mia Tai from Trip Advisor https://media-cdn.tripadvisor.com/media/photo-s/02/93/12/61/filename-img-1298-jpg.jpg & 
@@ -25,14 +27,14 @@
 <footer>
     <container id = "CardTable" alt "Cards via https://opengameart.org/content/playing-cards-0">
     <div>
-        <h2><span id="playerName">Player One</span></h2>
-            <button onclick="updateName()">Update Name</button>
-            <div id="playerHand"></div>
+        <h2 id="playerName">Player One</h2>
+        <div id="playerHand"></div>
+        <button onclick="updateName()">Update Name</button>
     </div>
     <div>
         <div id = "Bet">Place your bet!</div>
         <input type="number" id="amountToTransfer" placeholder="Bet Amount">
-            <button id = "bet" onclick="transferFunds()">Bet!</button>
+            <button id="bet" onclick="transferFunds()">Bet!</button>
                 <div id = "Pot">Pot: $<span id="potBalance">0</span></div>
                 <div id = "Purse">Purse: $<span id="purseBalance">500</span></div>
     </div>

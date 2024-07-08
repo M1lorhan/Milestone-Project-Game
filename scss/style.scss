@@ -1,0 +1,156 @@
+@use 'config' as cfg;
+@use 'btnConfig' as btnCfg;
+@use 'inputConfig' as inputCfg;
+
+@function apply-text-shadow($color) {
+    @if ($color == cfg.$primary-color) {
+        @return white;
+    }@else {
+        @return black; 
+    }
+    @debug "primary color: #{cfg.$primary-color}";
+}
+
+@mixin text-with-shadow($color) {
+    text-shadow: 3px 3px 10px apply-text-shadow($color);
+}
+
+body {
+    background-image: url('../assets/ittemaldiviano-jmkMl20jNS0-unsplash.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    /*Photo by Ittemaldiviano 🇲🇻 on Unsplash*/
+}
+
+#CasinoName {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: cfg.$primary-font;
+
+    h1 {
+        font-size: 4em;
+        color: cfg.$primary-color;
+        @include text-with-shadow(cfg.$secondary-color); 
+    }
+    p {
+        font-size: 3em;
+        color: cfg.$secondary-color;
+        @include text-with-shadow(cfg.$primary-color); 
+    }
+    #game-button{
+        font-size: 1em;
+        font-family: cfg.$secondary-font;
+    }
+}
+
+.blur-effect {
+    filter: blur(1px);
+}
+  
+button {
+    @include btnCfg.button-styles;
+}
+
+#drinkImage {
+    height: 4em;
+    width: auto;
+}
+  
+footer {
+    position: absolute;
+    bottom: 0;
+    margin: .5em;
+    width: 95%;
+    border: .5em solid black;
+    background-color: cfg.$table-color;
+    border-radius: 25%;
+    z-index: 2;
+    height: 16em;
+    box-shadow: 4px 4px 5px black;
+    font-family: cfg.$secondary-font;
+}
+  
+#cardTable{
+    display: flex;
+    h2 {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 5;
+        width: 38vw;
+        text-align: center;
+        color: cfg.$tertiary-color;
+        font-family: cfg.$secondary-font;
+    }
+    .playerCards {
+        height: 9em
+    }
+    .dealerCards {
+        padding-top: 2em;
+        margin: 1em;
+        height: 9em;
+    }
+}
+  
+div{
+    text-align: center;
+    color: cfg.$tertiary-color;
+}
+  
+#Bet {
+    text-align: center;
+    height: 2em;
+    font-weight: bold;
+    font-family: cfg.$secondary-font;
+}   
+input[type=number]{
+    @include inputCfg.input;
+}
+
+#Pot {
+    text-align: center;
+    flex-grow: 1;
+    height: 1.25em;
+    font-weight: bold;
+    font-family: cfg.$secondary-font;
+}
+  
+#Purse {
+    text-align: center;
+    flex-grow: 1;
+    height: 1.25em;
+    font-weight: bold;
+    font-family: cfg.$secondary-font;
+}
+  
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly; 
+    a{
+        font-family: cfg.$tertiary-font;
+        &:link {
+        text-decoration: none;
+        color: cfg.$primary-color;
+        }
+        &:visited {
+        text-decoration: none;
+        color: cfg.$quaternary-color;
+        }
+        &:hover {
+        font-weight: bold;
+        }
+    }
+}
+
+#playerHand, img {
+    max-width: 100%;
+    height: 7em ;
+}
+ 
+#dealerHand, img {
+    max-width: 100%;
+    height: 7em ;
+}

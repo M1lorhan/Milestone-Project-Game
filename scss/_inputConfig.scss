@@ -1,0 +1,8 @@
+@use 'config' as cfg;
+
+@mixin input{
+    background-color: cfg.$primary-color;
+    color: cfg.$secondary-color;
+    font-family: cfg.$tertiary-bold-font;
+    font-size: 1em;
+}

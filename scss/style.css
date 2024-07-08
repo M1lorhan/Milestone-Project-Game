@@ -1,0 +1,158 @@
+@charset "UTF-8";
+.dealcards {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 1em;
+  font-weight: bolder;
+  font-family: "Gruppo-bold";
+}
+
+body {
+  background-image: url("../assets/ittemaldiviano-jmkMl20jNS0-unsplash.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  /*Photo by Ittemaldiviano 🇲🇻 on Unsplash*/
+}
+
+#CasinoName {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Lugrasimo";
+}
+#CasinoName h1 {
+  font-size: 4em;
+  color: ffbc42;
+  text-shadow: 3px 3px 10px black;
+}
+#CasinoName p {
+  font-size: 3em;
+  color: d81159;
+  text-shadow: 3px 3px 10px white;
+}
+#CasinoName #game-button {
+  font-size: 1em;
+  font-family: "Gruppo";
+}
+
+.blur-effect {
+  filter: blur(1px);
+}
+
+button {
+  background-color: ffbc42;
+  color: d81159;
+  margin: 5px;
+  padding: 5px 5px;
+  font-size: 1em;
+  font-family: "Gruppo-bold";
+  border-radius: 7px;
+}
+
+#drinkImage {
+  height: 4em;
+  width: auto;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  margin: 0.5em;
+  width: 95%;
+  border: 0.5em solid black;
+  background-color: 8F2D56;
+  border-radius: 25%;
+  z-index: 2;
+  height: 16em;
+  box-shadow: 4px 4px 5px black;
+  font-family: "Gruppo";
+}
+
+#cardTable {
+  display: flex;
+}
+#cardTable h2 {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 5;
+  width: 38vw;
+  text-align: center;
+  color: 73D2DE;
+  font-family: "Gruppo";
+}
+#cardTable .playerCards {
+  height: 9em;
+}
+#cardTable .dealerCards {
+  padding-top: 2em;
+  margin: 1em;
+  height: 9em;
+}
+
+div {
+  text-align: center;
+  color: 73D2DE;
+}
+
+#Bet {
+  text-align: center;
+  height: 2em;
+  font-weight: bold;
+  font-family: "Gruppo";
+}
+
+input[type=number] {
+  background-color: ffbc42;
+  color: d81159;
+  font-family: "Arsenal-bold";
+  font-size: 1em;
+}
+
+#Pot {
+  text-align: center;
+  flex-grow: 1;
+  height: 1.25em;
+  font-weight: bold;
+  font-family: "Gruppo";
+}
+
+#Purse {
+  text-align: center;
+  flex-grow: 1;
+  height: 1.25em;
+  font-weight: bold;
+  font-family: "Gruppo";
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+ul a {
+  font-family: "Arsenal";
+}
+ul a:link {
+  text-decoration: none;
+  color: ffbc42;
+}
+ul a:visited {
+  text-decoration: none;
+  color: 218380;
+}
+ul a:hover {
+  font-weight: bold;
+}
+
+#playerHand, img {
+  max-width: 100%;
+  height: 7em;
+}
+
+#dealerHand, img {
+  max-width: 100%;
+  height: 7em;
+}/*# sourceMappingURL=style.css.map */

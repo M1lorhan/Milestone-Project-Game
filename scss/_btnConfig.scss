@@ -1,0 +1,23 @@
+@use 'config';
+
+$btn-color: config.$secondary-color;
+$btn-bg: config.$primary-color;
+
+.dealcards {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bolder;
+    font-family: config.$secondary-bold-font;
+}
+
+@mixin button-styles {
+    background-color: $btn-bg;
+    color: $btn-color;
+    margin: 5px;
+    padding: 5px 5px;
+    font-size: 1em;
+    font-family: config.$secondary-bold-font;
+    @include config.rounded;
+}

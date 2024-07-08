@@ -1,0 +1,17 @@
+$primary-color: ffbc42;
+$secondary-color: d81159;
+$tertiary-color: 73D2DE;
+$quaternary-color: 218380;
+$table-color: 8F2D56;
+
+$primary-font: 'Lugrasimo';
+$secondary-font: 'Gruppo';
+$tertiary-font: 'Arsenal';
+$secondary-bold-font: 'Gruppo-bold';
+$tertiary-bold-font: 'Arsenal-bold';
+$radius: 7px;
+
+@mixin rounded {
+    border-radius: $radius;
+  }
+
